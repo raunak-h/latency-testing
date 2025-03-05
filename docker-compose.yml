@@ -1,1 +1,11 @@
-
+version: '3'
+services:
+  sender:
+    build: ./sender
+    environment:
+      - DEST_IP=receiver
+      - DEST_PORT=5000
+  receiver:
+    build: ./receiver
+    ports:
+      - "5000:5000"
