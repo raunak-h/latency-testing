@@ -9,8 +9,8 @@ jobs:
         run: docker-compose --version
       - name: Build and run containers
         run: |
-          docker-compose up --build -d
+          docker compose up --build -d
           # Let the containers run for 30 seconds to gather data
           sleep 30
-          docker-compose logs
-          docker-compose down
+          docker compose logs
+          docker compose down
