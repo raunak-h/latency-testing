@@ -20,10 +20,11 @@ jobs:
           docker compose up --build -d
           # Let the containers run for 30 seconds to gather latency data
           sleep 30
+          docker compose logs
           docker compose down
 
       - name: Upload Latency CSV Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: latency-log
           path: latency_log.csv
