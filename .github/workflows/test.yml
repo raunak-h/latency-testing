@@ -24,7 +24,7 @@ jobs:
           docker compose down
 
       - name: Upload Latency CSV Log
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4
         with:
           name: latency-log
           path: latency_log.csv
