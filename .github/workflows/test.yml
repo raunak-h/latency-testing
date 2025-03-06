@@ -1,16 +1,29 @@
 name: Run Latency Test
-on: [push, pull_request]
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Docker Compose
-        run: docker compose --version
-      - name: Build and run containers
+
+      - name: Check Docker Compose Version
+        run: docker compose version
+
+      - name: Build and Run Containers
         run: |
           docker compose up --build -d
-          # Let the containers run for 30 seconds to gather data
+          # Let the containers run for 30 seconds to gather latency data
           sleep 30
-          docker compose logs
           docker compose down
+
+      - name: Upload Latency CSV Log
+        uses: actions/upload-artifact@v3
+        with:
+          name: latency-log
+          path: latency_log.csv
