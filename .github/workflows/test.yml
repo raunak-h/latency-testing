@@ -16,6 +16,11 @@ jobs:
       - name: Check Docker Compose version
         run: docker compose version
 
+      - name: Set iptables to legacy (fix Docker networking)
+        run: |
+          sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+          sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+
       - name: Build and run containers
         run: |
           docker compose up --build -d
