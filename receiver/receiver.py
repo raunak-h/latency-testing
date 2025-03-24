@@ -8,6 +8,9 @@ import csv
 import os
 
 def init_csv_logging(filename):
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
     file_exists = os.path.exists(filename)
     csv_file = open(filename, 'a', newline='')
     csv_writer = csv.writer(csv_file)
@@ -59,6 +62,6 @@ def run_receiver(listen_port, log_filename):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Simulate video receiver.")
     parser.add_argument("--listen_port", type=int, required=True, help="Port number to listen on.")
-    parser.add_argument("--log_file", type=str, default="latency_log.csv", help="CSV file to log results.")
+    parser.add_argument("--log_file", type=str, default="logs/latency_log.csv", help="CSV file to log results.")
     args = parser.parse_args()
     run_receiver(args.listen_port, args.log_file)

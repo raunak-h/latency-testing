@@ -1,4 +1,4 @@
-name: Run Latency Test
+name: Run Latency Test with Visualization
 
 on:
   push:
@@ -10,21 +10,36 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Check Docker Compose Version
+      - name: Check Docker Compose version
         run: docker compose version
 
-      - name: Build and Run Containers
+      - name: Build and run containers
         run: |
           docker compose up --build -d
-          # Let the containers run for 30 seconds to gather latency data
-          sleep 30
+          sleep 30  # Let receiver collect latency data
           docker compose logs
           docker compose down
 
-      - name: Upload Latency CSV Log
+      - name: Set up Python environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip
+          pip install pandas matplotlib
+
+      - name: Generate latency plot
+        run: python3 plot_latency.py
+
+      - name: Upload CSV log
         uses: actions/upload-artifact@v4
         with:
           name: latency-log
-          path: latency_log.csv
+          path: logs/latency_log.csv
+
+      - name: Upload latency plot
+        uses: actions/upload-artifact@v4
+        with:
+          name: latency-graph
+          path: logs/latency_plot.png
