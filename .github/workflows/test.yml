@@ -19,7 +19,7 @@ jobs:
       - name: Build and run containers
         run: |
           docker compose up --build -d
-          sleep 30  # Let receiver collect latency data
+          sleep 60  # Let receiver collect latency data
           docker compose logs
           docker compose down
 
