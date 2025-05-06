@@ -5,8 +5,11 @@ Delayed control signals and camera streams can critically undermine robotic oper
 **Generalised Workflow**
 
 – MJPEG latency is calculated using timestamps on each frame.
+
 – HLS latency is estimated based on segment buffering.
-– Tracks bandwidth usage of both in real-time.
+
+– Tracks bandwidth usage of both per test cycle.
+
 
 **MODES**
 
